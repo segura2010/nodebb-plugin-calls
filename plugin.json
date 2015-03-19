@@ -1,0 +1,14 @@
+{
+	"id": "nodebb-plugin-calls",
+	"name": "NodeBB Calls",
+	"description": "This plugin allows to other users using WebRTC and PeerJS",
+	"url": "https://github.com/segura2010/nodebb-plugin-calls",
+	"library": "./library.js",
+
+	"scripts": [
+		"public/js/client.js",
+		"public/js/peer.min.js"
+	],
+  "templates": "./templates",
+  "minver": "0.7.0"
+}
