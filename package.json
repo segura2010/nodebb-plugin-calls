@@ -1,7 +1,7 @@
 {
   "name": "nodebb-plugin-calls",
   "version": "0.0.1",
-  "description": "This plugin allows to other users using WebRTC and PeerJS",
+  "description": "This plugin allows to call other users using WebRTC and PeerJS",
   "main": "library.js",
   "repository": {
     "type": "git",
