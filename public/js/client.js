@@ -42,14 +42,14 @@ $('document').ready(function () {
 					navigator.getUserMedia({video: false, audio: true}, function(stream) {
 					  var call = app.user.peer.call(data.peerid, stream);
 					  app.user.call[call.id] = call;
-					  app.user.call[call.id].answer(stream); // Answer the call with an A/V stream.
-						app.user.call[call.id].on('stream', function(remoteStream) {
+					  call.answer(stream); // Answer the call with an A/V stream.
+						call.on('stream', function(remoteStream) {
 						  // Show stream in some video/canvas element.
-						  console.log($('#callStream'));
+						  console.log("RECIBO!!");
 						  $("#alert_button_actualCall_"+this.id).find('#callStream').prop('src', URL.createObjectURL(remoteStream));
 						  //console.log("Received stream..");
 						});
-						app.user.call[call.id].on("close", function(){
+						call.on("close", function(){
 							var cid = call.id;
 							$("#alert_button_actualCall_"+cid).remove();
 						});
@@ -93,24 +93,25 @@ $('document').ready(function () {
 				app.user.peer.on('call', function(call) {
 					app.user.call[call.id] = call;
 				  	navigator.getUserMedia({video: false, audio: true}, function(stream) {
-					  	call.answer(stream); // Answer the call with an A/V stream.
-					  	app.user.call[call.id] = call;
-						app.user.call[call.id].answer(stream); // Answer the call with an A/V stream.
-						app.user.call[call.id].on('stream', function(remoteStream) {
-						  // Show stream in some video/canvas element.
-						  $("#alert_button_actualCall_"+this.id).find('#callStream').prop('src', URL.createObjectURL(remoteStream));
-						  //console.log("Received stream..");
-						});
-						app.user.call[call.id].on("close", function(){
-							var cid = call.id;
-							$("#alert_button_actualCall_"+cid).remove();
-						});
-					  	app.alert({
+				  		app.alert({
 							type: 'success',
 							timeout: 0,
 							title: 'Llamada en curso',
 							message: "Hablando con "+app.user.peer.actualCallUsername+". <br> <a id='closeCall'>Colgar</a> <video style='display:none;' autoplay id='callStream'></video>",
 							alert_id: 'actualCall_'+call.id
+						});
+					  	call.answer(stream); // Answer the call with an A/V stream.
+					  	app.user.call[call.id] = call;
+						app.user.call[call.id].answer(stream); // Answer the call with an A/V stream.
+						call.on('stream', function(remoteStream) {
+						  // Show stream in some video/canvas element.
+						  var cid = call.id;
+						  $("#alert_button_actualCall_"+cid).find('#callStream').prop('src', URL.createObjectURL(remoteStream));
+						  console.log(cid);
+						});
+						call.on("close", function(){
+							var cid = call.id;
+							$("#alert_button_actualCall_"+cid).remove();
 						});
 					  	setTimeout(function(){
 					  		$("#alert_button_actualCall").find(".close").hide();
